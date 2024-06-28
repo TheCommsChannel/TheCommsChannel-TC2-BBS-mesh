@@ -53,7 +53,9 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-5. Set up the configuration in `config.ini`:
+5. Configuration
+  - Copy config/config.init.sample to config/config.ini
+  - Set up the configuration in `config.ini`:
    
   **[interface]**
   
@@ -78,7 +80,7 @@ pip install -r requirements.txt
 ```ini
 [interface]
 type = serial
-# port = /dev/ttyUSB0
+# port = /dev/ttyUSB0 # or /dev/ttyACM0
 # hostname = 192.168.x.x
 
 [sync]
@@ -94,6 +96,18 @@ python server.py
 ```
 
 Be sure you've followed the Python virtual environment steps above and activated it before running.
+
+## Docker
+The docker entrypoint.sh will automatically copy config.ini.sample to config.ini
+if you want to edit config, make sure you add the config directory as a docker volume.
+
+Environment Variables: FORTUNE_FILE, DB_FILE, CONFIG_FILE
+
+```sh
+docker run -it --name tc2bbsmesh -v tc2bbsmesh-config:/app/config/ -v tc2bbsmesh-data:/app/data/  --device=/dev/ttyACM0 tc2-bbs-mesh
+```
+
+Tested on Orange Pi 3 LTS (Armbian), but should work on all linux distros.
 
 ## Features
 
